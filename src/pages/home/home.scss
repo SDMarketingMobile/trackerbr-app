@@ -1,3 +1,44 @@
 page-home {
+	.home-cards {
+		ion-thumbnail {
+			min-width: 100px;
+			text-align: center;
+		}
 
+		h2 {
+			font-weight: bold;
+		}
+
+		ion-item {
+			min-height: 130px;
+		}
+
+		ion-item,
+		.item-ios p {
+			color: #fff !important;
+		}
+
+		.icon-xl {
+			font-size: 80px;
+		}
+
+		.card-my-cars {
+			background-color: #b93939;
+		}
+		.card-traffic-map {
+			background-color: #2ebb46;
+		}
+		.card-notifications {
+			background-color: #ff9800;
+		}
+		.card-settings {
+			background-color: #808080;
+		}
+
+		.shadow-top {
+			-webkit-box-shadow: inset 0px 14px 17px -5px rgba(0,0,0,0.53);
+			   -moz-box-shadow: inset 0px 14px 17px -5px rgba(0,0,0,0.53);
+			        box-shadow: inset 0px 14px 17px -5px rgba(0,0,0,0.53);
+		}
+	}
 }

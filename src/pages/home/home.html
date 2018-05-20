@@ -1,14 +1,59 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<ion-title>
+			TrackerBR
+		</ion-title>
+		
+		<ion-buttons end>
+			<button ion-button icon-only>
+				<ion-icon name="refresh"></ion-icon>
+			</button>
+		</ion-buttons>
+	</ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content>
+	<ion-list class="home-cards" no-lines>
+		<ion-item class="card-my-cars shadow-top">
+			<ion-thumbnail item-start>
+				<ion-icon class="icon-xl" name="car-outline"></ion-icon>
+			</ion-thumbnail>
+			<h2>Meus Carros</h2>
+			<p>
+				<strong>119</strong> total
+				<strong>25</strong> ligados
+				<strong>94</strong> desligados
+			</p>
+		</ion-item>
+
+		<ion-item class="shadow-top card-traffic-map">
+			<ion-thumbnail item-start>
+				<ion-icon class="icon-xl" name="map-outline"></ion-icon>
+			</ion-thumbnail>
+			<h2>Mapa de Tráfego</h2>
+			<p>
+				<strong>15</strong> em movimento
+			</p>
+		</ion-item>
+
+		<ion-item class="shadow-top card-notifications">
+			<ion-thumbnail item-start>
+				<ion-icon class="icon-xl" name="notifications-outline"></ion-icon>
+			</ion-thumbnail>
+			<h2>Notificações</h2>
+			<p>
+				<strong>9</strong> não lidas
+			</p>
+		</ion-item>
+
+		<ion-item class="shadow-top card-settings">
+			<ion-thumbnail item-start>
+				<ion-icon class="icon-xl" name="cog"></ion-icon>
+			</ion-thumbnail>
+			<h2>Configurações</h2>
+			<p>
+				Definições do usuário
+			</p>
+		</ion-item>
+	</ion-list>
 </ion-content>

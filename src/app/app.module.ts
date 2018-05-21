@@ -7,6 +7,11 @@ import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { LoginPage } from '../pages/login/login';
+import { MapPage } from '../pages/map/map';
+import { MyCarsPage } from '../pages/my-cars/my-cars';
+import { ConfigPage } from '../pages/config/config';
+import { NotificationPage } from '../pages/notification/notification';
 import { AboutPage } from '../pages/about/about';
 import { UsersProvider } from '../providers/users/users';
 import { ProdutosProvider } from '../providers/produtos/produtos';
@@ -15,7 +20,12 @@ import { ProdutosProvider } from '../providers/produtos/produtos';
   declarations: [
     MyApp,
     HomePage,
-    AboutPage
+    AboutPage,
+    LoginPage,
+    MapPage,
+    MyCarsPage,
+    ConfigPage,
+    NotificationPage
   ],
   imports: [
     BrowserModule,
@@ -26,7 +36,12 @@ import { ProdutosProvider } from '../providers/produtos/produtos';
   entryComponents: [
     MyApp,
     HomePage,
-    AboutPage
+    AboutPage,
+    LoginPage,
+    MapPage,
+    MyCarsPage,
+    ConfigPage,
+    NotificationPage
   ],
   providers: [
     StatusBar,

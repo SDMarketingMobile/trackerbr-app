@@ -1,9 +1,6 @@
 <ion-header>
-	<ion-navbar>
-		<ion-title>
-			TrackerBR
-		</ion-title>
-		
+	<ion-navbar color="toolbar-home" class="menu">
+		<img class="img" src="../assets/imgs/logo_trackerbr.png">
 		<ion-buttons end>
 			<button ion-button icon-only>
 				<ion-icon name="refresh"></ion-icon>
@@ -14,9 +11,9 @@
 
 <ion-content>
 	<ion-list class="home-cards" no-lines>
-		<ion-item class="card-my-cars shadow-top">
+		<ion-item class="card-my-cars shadow-top" (click)="goToMyCarsPage()">
 			<ion-thumbnail item-start>
-				<ion-icon class="icon-xl" name="car-outline"></ion-icon>
+				<ion-icon class="icon-xl" name="car"></ion-icon>
 			</ion-thumbnail>
 			<h2>Meus Carros</h2>
 			<p>
@@ -26,17 +23,17 @@
 			</p>
 		</ion-item>
 
-		<ion-item class="shadow-top card-traffic-map">
-			<ion-thumbnail item-start>
-				<ion-icon class="icon-xl" name="map-outline"></ion-icon>
-			</ion-thumbnail>
-			<h2>Mapa de Tráfego</h2>
-			<p>
-				<strong>15</strong> em movimento
-			</p>
+		<ion-item class="shadow-top card-traffic-map" (click)="goToMapPage()">
+				<ion-thumbnail item-start>
+					<ion-icon class="icon-xl" name="map"></ion-icon>
+				</ion-thumbnail>
+				<h2>Mapa de Tráfego</h2>
+				<p>
+					<strong>15</strong> em movimento
+				</p>
 		</ion-item>
 
-		<ion-item class="shadow-top card-notifications">
+		<ion-item class="shadow-top card-notifications" (click)="goToNotificationPage()">
 			<ion-thumbnail item-start>
 				<ion-icon class="icon-xl" name="notifications-outline"></ion-icon>
 			</ion-thumbnail>
@@ -46,7 +43,7 @@
 			</p>
 		</ion-item>
 
-		<ion-item class="shadow-top card-settings">
+		<ion-item class="shadow-top card-settings" (click)="goToConfigPage()">
 			<ion-thumbnail item-start>
 				<ion-icon class="icon-xl" name="cog"></ion-icon>
 			</ion-thumbnail>

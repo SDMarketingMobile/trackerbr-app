@@ -3,15 +3,19 @@ page-map {
 		-webkit-box-shadow: inset 0px 14px 17px -5px rgba(0,0,0,0.53);
 		   -moz-box-shadow: inset 0px 14px 17px -5px rgba(0,0,0,0.53);
 		        box-shadow: inset 0px 14px 17px -5px rgba(0,0,0,0.53);
-		background-image: url("../assets/imgs/mapa.png");
 	}
 	.menu {
-		padding-top: 35px;
-		padding-bottom: 35px;
+		padding-top: 25px;
+		padding-bottom: 25px;
 		text-align: center;	
 		.img {
 			width: 50%;
 		}
+	}
+
+	#map{
+		height: 100%;
+		width: 100%;
 	}
 		
 }

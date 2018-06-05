@@ -8,8 +8,11 @@
 	<ion-navbar color="toolbar-my-cars" class="menu">
 		<img class="img" src="../assets/imgs/logo_trackerbr.png">
 		<ion-buttons end>
-			<button ion-button icon-only>
+			<button ion-button icon-only *ngIf="showSelect == false" (click)="showSelectMyCars()">
 				<ion-icon name="funnel"></ion-icon>
+			</button>
+			<button ion-button icon-only *ngIf="showSelect == true" (click)="goToMapPage(veiculos)">
+				<ion-icon name="map"></ion-icon>
 			</button>
 		</ion-buttons>
 	</ion-navbar>
@@ -18,6 +21,10 @@
 
 <ion-content>
 
+	<ion-refresher (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
+
 	<ion-list class="type" no-lines>
 		<ion-item class="item-type">
 			<h2>CARROS</h2>
@@ -25,48 +32,23 @@
 	</ion-list>
 
 	<ion-list class="card" no-lines>
-		<ion-item class="stoped">
+		<ion-item [style.background-color]="item.lig == 1 ? '#2ebb46' : '#b93939'" *ngFor="let item of veiculos">
+			<ion-checkbox *ngIf="showSelect" [(ngModel)]="item.selected"></ion-checkbox>
 			<ion-thumbnail item-start>
-				<ion-icon class="icon-xl size-1" name="car"></ion-icon><strong> ENS-7790</strong>
+				<ion-icon class="icon-xl size-1" name="car"></ion-icon><strong> {{ item.placa}}</strong>
 				<br>
 				<ion-icon class="icon-xl" name="locate"></ion-icon><small> Rua João Dias da Silva, 182 <br> Casa Verde, São Paulo - SP</small>
-				<ion-icon class="icon-xl" name="speedometer"></ion-icon><small> 0,0km/h</small>
+				<ion-icon class="icon-xl" name="speedometer"></ion-icon><small> {{ item.velocidade }}km/h</small>
 				<br>
-				<ion-icon class="icon-xl" name="timer"></ion-icon><small> 20/05/18 13:40</small>
-				<ion-icon class="icon-xl" name="walk"></ion-icon><small> 13.865 km</small>
-			</ion-thumbnail>
-		</ion-item>
-		<br>
-		<ion-item class="moviment">
-			<ion-thumbnail item-start>
-				<ion-icon class="icon-xl size-1" name="car"></ion-icon> <strong> AOP-7086</strong>
-				<br>
-				<ion-icon class="icon-xl" name="locate"></ion-icon><small> Rua Fortunato Minozzi, 158 <br> Imirim, São Paulo - SP</small>
-				<ion-icon class="icon-xl" name="speedometer"></ion-icon><small> 0,0km/h</small>
-				<br>
-				<ion-icon class="icon-xl" name="timer"></ion-icon><small> 20/05/18 13:40</small>
+				<ion-icon class="icon-xl" name="timer"></ion-icon><small> {{ item.dataServidor.date }}</small>
 				<ion-icon class="icon-xl" name="walk"></ion-icon><small> 13.865 km</small>
 			</ion-thumbnail>
 		</ion-item>
 	</ion-list>
 
-	<ion-list class="type" no-lines>
+	<!-- <ion-list class="type" no-lines>
 		<ion-item class="item-type">
 			<h2>ÔNIBUS</h2>
 		</ion-item>
-	</ion-list>
-
-	<ion-list class="card" no-lines>
-		<ion-item class="stoped">
-			<ion-thumbnail item-start>
-				<ion-icon class="icon-xl size-1" name="car"></ion-icon><strong> PPP-7790</strong>
-				<br>
-				<ion-icon class="icon-xl" name="locate"></ion-icon><small> Rua João Dias da Silva, 182 <br> Casa Verde, São Paulo - SP</small>
-				<ion-icon class="icon-xl" name="speedometer"></ion-icon><small> 0,0km/h</small>
-				<br>
-				<ion-icon class="icon-xl" name="timer"></ion-icon><small> 20/05/18 13:40</small>
-				<ion-icon class="icon-xl" name="walk"></ion-icon><small> 13.865 km</small>
-			</ion-thumbnail>
-		</ion-item>
-	</ion-list>
+	</ion-list>-->
 </ion-content>

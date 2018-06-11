@@ -140,7 +140,6 @@ export class MyCarsPage {
 					this.veiculos = JSON.parse(res['_body']).veiculos;
 					refresher.complete();
 				}
-
 				/*for(let item of this.veiculos){
 					let latLon = {
 						lat: item.lat,

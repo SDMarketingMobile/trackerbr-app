@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App, LoadingController } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
 
+import { PathsPage } from '../paths/paths';
+
 declare var google;
 
 /**
@@ -57,6 +59,10 @@ export class MyCarsDetailsPage {
 		} else {
 			this.color = 'toolbar-my-cars';
 		}
+	}
+
+	goToPathsPage(id_veiculo){
+		this.navCtrl.push(PathsPage, {id_veiculo});
 	}
 
 } 

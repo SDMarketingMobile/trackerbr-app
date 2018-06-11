@@ -22,6 +22,12 @@ export class HomePage {
 	}
 
 	goToMyCarsPage(){
+		let loader = this.loadingCtrl.create({
+			content: "Aguarde!",
+			duration: 500
+		});
+
+		loader.present();
 		//let options: NativeTransitionOptions = {
 		//	direction: 'up',
 		//	duration: 500,
@@ -64,6 +70,8 @@ export class HomePage {
 			content: "Aguarde!"
 		});
 
+		loader.present();
+
 		this.total_veiculos = 0;
 		this.total_ligados = 0;
 		this.total_desligados = 0;
@@ -77,7 +85,6 @@ export class HomePage {
 		this.http.get('https://api.getrak.com/v0.1/localizacoes', {headers: headers})
 			.subscribe(res => {
 				if (res['_body']) {
-					loader.dismiss();
 					this.veiculos = JSON.parse(res['_body']).veiculos
 					this.total_veiculos = this.veiculos.length;
 					for(let item of this.veiculos){
@@ -93,6 +100,7 @@ export class HomePage {
 								break;
 						}
 					}
+					loader.dismiss();
 				}
 			}, (err) => {
 				console.log(err);

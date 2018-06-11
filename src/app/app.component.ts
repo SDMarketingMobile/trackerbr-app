@@ -10,6 +10,7 @@ import { MyCarsPage } from '../pages/my-cars/my-cars';
 import { ConfigPage } from '../pages/config/config';
 import { NotificationPage } from '../pages/notification/notification';
 import { MyCarsDetailsPage } from '../pages/my-cars-details/my-cars-details';
+import { PathsPage } from '../pages/paths/paths';
 
 @Component({
   templateUrl: 'app.html'

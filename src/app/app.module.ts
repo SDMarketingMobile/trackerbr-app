@@ -10,6 +10,7 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
 import { MyCarsPage } from '../pages/my-cars/my-cars';
+import { MyCarsDetailsPage } from '../pages/my-cars-details/my-cars-details';
 import { ConfigPage } from '../pages/config/config';
 import { NotificationPage } from '../pages/notification/notification';
 import { AboutPage } from '../pages/about/about';
@@ -24,6 +25,7 @@ import { ProdutosProvider } from '../providers/produtos/produtos';
     LoginPage,
     MapPage,
     MyCarsPage,
+    MyCarsDetailsPage,
     ConfigPage,
     NotificationPage
   ],
@@ -40,6 +42,7 @@ import { ProdutosProvider } from '../providers/produtos/produtos';
     LoginPage,
     MapPage,
     MyCarsPage,
+    MyCarsDetailsPage,
     ConfigPage,
     NotificationPage
   ],

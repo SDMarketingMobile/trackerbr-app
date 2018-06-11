@@ -31,6 +31,7 @@ export class MapPage {
 	}
 
 	public veiculos: any;
+	public veiculo = [];
 	public locations = [];
 
 	load(){
@@ -50,6 +51,12 @@ export class MapPage {
 				}
 			}
 			this.initMap(this.locations);
+
+		} else if (this.navParams.data.veiculo){
+			this.veiculo = this.navParams.data.veiculo;
+			this.locations.push(this.veiculo);
+			this.initMap(this.locations);
+
 		} else {
 			var token = JSON.parse(localStorage.getItem('app.trackerbr.user.data'));
 
@@ -62,7 +69,7 @@ export class MapPage {
 						loader.dismiss();
 						this.veiculos = JSON.parse(res['_body']).veiculos
 						for(let item of this.veiculos){
-							if (item.lig == 1) {
+							if (item.velocidade > 0) {
 								let latLon = {
 									lat: item.lat,
 									lng: item.lon

@@ -31,20 +31,28 @@
 		</ion-item>
 	</ion-list>
 
-	<ion-list class="card" no-lines>
-		<ion-item [style.background-color]="item.lig == 1 ? '#2ebb46' : '#b93939'" *ngFor="let item of veiculos">
-			<ion-checkbox *ngIf="showSelect" [(ngModel)]="item.selected"></ion-checkbox>
-			<ion-thumbnail item-start>
-				<ion-icon class="icon-xl size-1" name="car"></ion-icon><strong> {{ item.placa}}</strong>
-				<br>
-				<ion-icon class="icon-xl" name="locate"></ion-icon><small> Rua João Dias da Silva, 182 <br> Casa Verde, São Paulo - SP</small>
-				<ion-icon class="icon-xl" name="speedometer"></ion-icon><small> {{ item.velocidade }}km/h</small>
-				<br>
-				<ion-icon class="icon-xl" name="timer"></ion-icon><small> {{ item.dataServidor.date }}</small>
-				<ion-icon class="icon-xl" name="walk"></ion-icon><small> 13.865 km</small>
-			</ion-thumbnail>
-		</ion-item>
-	</ion-list>
+	<ion-card class="card" *ngFor="let item of veiculos">
+		<ion-card-header [style.background-color]="testecor(item)" class="card-title">
+			<span class="placa"><strong>{{ item.placa }}</strong></span>
+			<ion-checkbox *ngIf="showSelect" [(ngModel)]="item.selected" end></ion-checkbox>
+		</ion-card-header>
+		<ion-card-content (click)="goToMyCarsDetailsPage(item)">
+			<ion-icon class="icon-xl" name="locate"></ion-icon><small> {{ item.rua }}</small>
+			<br>
+			<ion-icon class="icon-xl" name="speedometer"></ion-icon><small> {{ item.velocidade }}km/h  </small>
+			<ion-icon class="icon-xl" name="walk"></ion-icon><small> 13.865 km</small>
+			<br>
+			<ion-icon class="icon-xl" name="timer"></ion-icon><small> {{ item.dataServidor.date }}</small>
+			<!--<div id="map-car-{{ item.index }}">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</div>-->
+		</ion-card-content>
+	</ion-card>
 
 	<!-- <ion-list class="type" no-lines>
 		<ion-item class="item-type">

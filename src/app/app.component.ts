@@ -9,6 +9,8 @@ import { MapPage } from '../pages/map/map';
 import { MyCarsPage } from '../pages/my-cars/my-cars';
 import { ConfigPage } from '../pages/config/config';
 import { NotificationPage } from '../pages/notification/notification';
+import { MyCarsDetailsPage } from '../pages/my-cars-details/my-cars-details';
+
 @Component({
   templateUrl: 'app.html'
 })

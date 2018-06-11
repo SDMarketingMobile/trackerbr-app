@@ -8,7 +8,11 @@ page-my-cars {
 		}
 	}
 
-	.type{
+	ion-content {
+		background: #f5f6fb !important;
+	}
+
+	.type {
 
 		.item-type {
 			background: #2b2f40;
@@ -20,32 +24,29 @@ page-my-cars {
 			font-size: 12px;
 			color: #fff !important;
 		} 
+
 	}
 
-	.card{
-		padding-left: 10px;
-		padding-right: 10px;
-
-		ion-item{
-			margin-bottom: 10px;
-			color: #fff;
+	.card {
+		ion-card-header {
+			color: #ffffff;
 		}
 
-		ion-thumbnail {
-			min-width: 100px;
+		ion-card-content {
+			padding-top: 10px !important;
 		}
 
-		.size-1{
-			font-size: 20px !important;
-			font-weight: bold;
+		.thumbnail-align {
+			text-align: center;
 		}
+	}
 
-		.size-2{
-			font-size: 10px !important;
-		}
+	.card-title {
+		text-align: center;
+	}
 
-		.lado{
-			float: right;
-		}
+	#map {
+		height: 30px;
+		width: 100%;
 	}
 }

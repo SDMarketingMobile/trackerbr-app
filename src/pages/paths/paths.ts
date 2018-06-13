@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, App, LoadingController } from 'ion
 import { Http, Headers } from '@angular/http';
 
 import { AlertController } from 'ionic-angular';
-import { LoadingController } from 'ionic-angular';
 
 /**
  * Generated class for the PathsPage page.
@@ -74,7 +73,7 @@ export class PathsPage {
 		let headers = new Headers();
 		headers.append('Authorization', token.token_type+" "+token.access_token);
 
-		this.http.get('https://api.getrak.com/v0.1/deslocamentos/'+this.id_veiculo+'/'+this.busca.dta_inicial+'T00%3A00%3A00'+'/'+this.busca.dta_final+'T23%3A59%3A59', {headers: headers})
+		this.http.get('https://api.getrak.com/v0.1/deslocamentos/'+this.id_veiculo+'/'+this.busca['dta_inicial']+'T00%3A00%3A00'+'/'+this.busca['dta_final']+'T23%3A59%3A59', {headers: headers})
 			.subscribe(res => {
 				if (res['_body']) {
 					this.trajetos = JSON.parse(res['_body']); 	

@@ -4,6 +4,8 @@ import { Http, Headers } from '@angular/http';
 
 import { AlertController } from 'ionic-angular';
 
+import { DisplacementsPage } from '../displacements/displacements';
+
 /**
  * Generated class for the PathsPage page.
  *
@@ -27,7 +29,7 @@ export class PathsPage {
 		public loadingCtrl: LoadingController
 	){}
 
-	public trajetos: any;
+	public delocamentos: any;
 	public id_veiculo = "";
 	public busca = {};
 
@@ -35,7 +37,7 @@ export class PathsPage {
 		this.id_veiculo = this.navParams.data.id_veiculo;
 	}
 
-	loadTrajetos(){
+	loadDeslocamentos(){
 		let loader = this.loadingCtrl.create({
 			content: "Aguarde!"
 		});
@@ -76,7 +78,7 @@ export class PathsPage {
 		this.http.get('https://api.getrak.com/v0.1/deslocamentos/'+this.id_veiculo+'/'+this.busca['dta_inicial']+'T00%3A00%3A00'+'/'+this.busca['dta_final']+'T23%3A59%3A59', {headers: headers})
 			.subscribe(res => {
 				if (res['_body']) {
-					this.trajetos = JSON.parse(res['_body']); 	
+					this.delocamentos = JSON.parse(res['_body']); 	
 					loader.dismiss();			
 				}
 			}, (err) => {
@@ -84,6 +86,11 @@ export class PathsPage {
 			});
 
 		
+	}
+
+	goToDisplacementsPage(item){
+		item['id_veiculo'] = (this.id_veiculo);
+		this.navCtrl.push(DisplacementsPage, {'trajeto':item});
 	}
 
 }

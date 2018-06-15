@@ -14,6 +14,7 @@ import { MyCarsDetailsPage } from '../pages/my-cars-details/my-cars-details';
 import { ConfigPage } from '../pages/config/config';
 import { NotificationPage } from '../pages/notification/notification';
 import { PathsPage } from '../pages/paths/paths';
+import { DisplacementsPage } from '../pages/displacements/displacements';
 import { AboutPage } from '../pages/about/about';
 import { UsersProvider } from '../providers/users/users';
 import { ProdutosProvider } from '../providers/produtos/produtos';
@@ -29,7 +30,8 @@ import { ProdutosProvider } from '../providers/produtos/produtos';
     MyCarsDetailsPage,
     ConfigPage,
     NotificationPage,
-    PathsPage
+    PathsPage,
+    DisplacementsPage
   ],
   imports: [
     BrowserModule,
@@ -47,7 +49,8 @@ import { ProdutosProvider } from '../providers/produtos/produtos';
     MyCarsDetailsPage,
     ConfigPage,
     NotificationPage,
-    PathsPage
+    PathsPage,
+    DisplacementsPage
   ],
   providers: [
     StatusBar,

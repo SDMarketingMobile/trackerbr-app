@@ -11,6 +11,7 @@ import { ConfigPage } from '../pages/config/config';
 import { NotificationPage } from '../pages/notification/notification';
 import { MyCarsDetailsPage } from '../pages/my-cars-details/my-cars-details';
 import { PathsPage } from '../pages/paths/paths';
+import { DisplacementsPage } from '../pages/displacements/displacements';
 
 @Component({
   templateUrl: 'app.html'

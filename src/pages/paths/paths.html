@@ -6,7 +6,7 @@
 -->
 <ion-header>
 	<ion-navbar color="toolbar-home" class="menu">
-		<ion-title><strong>Trajetos</strong></ion-title>
+		<ion-title><strong>Deslocamentos</strong></ion-title>
 		<ion-buttons end>
 			<button ion-button icon-only>
 				<ion-icon name="funnel"></ion-icon>
@@ -26,11 +26,11 @@
 		<ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="busca.dta_final"></ion-datetime>
 	</ion-item>
 	<ion-buttons>
-		<button ion-button block (click)="loadTrajetos()">Filtrar</button>
+		<button ion-button block (click)="loadDeslocamentos()">Filtrar</button>
 	</ion-buttons>
 
-	<ion-card class="card" *ngFor="let item of trajetos">
-		<ion-card-content>
+	<ion-card class="card" *ngFor="let item of delocamentos">
+		<ion-card-content (click)="goToDisplacementsPage(item)">
 			<ion-icon name="clock"></ion-icon><small> Hora Inicial: {{ item.data_ini }}</small>
 			<br>
 			<ion-icon name="clock"></ion-icon><small> Hora Final: {{ item.data_fim }}</small>

@@ -1,0 +1,25 @@
+page-displacements {
+	ion-content {
+		-webkit-box-shadow: inset 0px 14px 17px -5px rgba(0,0,0,0.53);
+		   -moz-box-shadow: inset 0px 14px 17px -5px rgba(0,0,0,0.53);
+		        box-shadow: inset 0px 14px 17px -5px rgba(0,0,0,0.53);
+	}
+	
+	.menu {
+		padding-top: 25px;
+		padding-bottom: 25px;
+		text-align: center;	
+		.img {
+			width: 50%;
+		}
+	}
+
+	ion-content {
+		background: #f5f6fb !important;
+	}
+
+	#map{
+		height: 100%;
+		width: 100%;
+	}
+}

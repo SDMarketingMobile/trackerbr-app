@@ -4,14 +4,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { LoginPage } from '../pages/login/login';
-import { HomePage } from '../pages/home/home';
-import { MapPage } from '../pages/map/map';
-import { MyCarsPage } from '../pages/my-cars/my-cars';
-import { ConfigPage } from '../pages/config/config';
-import { NotificationPage } from '../pages/notification/notification';
-import { MyCarsDetailsPage } from '../pages/my-cars-details/my-cars-details';
-import { PathsPage } from '../pages/paths/paths';
-import { DisplacementsPage } from '../pages/displacements/displacements';
 
 @Component({
   templateUrl: 'app.html'

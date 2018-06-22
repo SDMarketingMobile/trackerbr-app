@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App, LoadingController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, LoadingController } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
+import leaflet from 'leaflet';
+import * as _ from 'underscore';
 
-declare var google: any;
 
 /**
  * Generated class for the DisplacementsPage page.
@@ -22,8 +23,7 @@ export class DisplacementsPage {
 				public navParams: NavParams, 
 				public http: Http,
 				public appCtrl: App,
-				public loadingCtrl: LoadingController,
-				private platform: Platform
+				public loadingCtrl: LoadingController
 			) {}
 
  	public trajeto: any;
@@ -34,73 +34,9 @@ export class DisplacementsPage {
  		dta_inicial: "",
  		dta_final: ""
  	};
- 	directions:any;
- 	map: any;
-
- 	initTraceRoute(){
-
-		this.platform.ready().then(() =>{
-			this.loadMap();
-		});
- 	}
-
- 	loadMap(){
- 		this.map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 10,
-          center: {lat: -23.551328, lng: -46.633347}
-        });
-
-		this.calcRoute(-23.551328, -46.633347);
- 	}
-
- 	calcRoute(latitude: number, longitude: number){
- 		let directionsRenderer = new google.maps.DirectionsRenderer();
- 		directionsRenderer.setMap(this.map);
-
- 		var origem = {
-			lat: this.trajetos[0]['lat'],
-			lng: this.trajetos[0]['lon']
-		}
-
-		var destino = {
-			lat: this.trajetos[this.trajetos.length-1]['lat'],
-			lng: this.trajetos[this.trajetos.length-1]['lon']
-		}
-
- 		let directionsService = new google.maps.DirectionsService();
-
-
- 		var params = {
- 			origin: origem,
- 			destination: destino,
- 			travelMode: google.maps.TravelMode.DRIVING,
- 			waypoints: []
- 		};
-
- 		var wp = [];
- 		
- 		
- 		/*for(var i = 0; i = this.trajetos.length; i++){
- 			if( i != (this.trajetos.length-1)) {
- 				i--;
- 				wp.push({lat: this.trajetos[i]['lat'], lng: this.trajetos[i]['lon']});
-			}
- 		}*/
-
- 		for(let i of this.trajetos){
-			if(i != this.trajetos.length - 1) {
-				var myLatLng = new google.maps.LatLng(i.lat, i.lon);
-				wp.push({location: myLatLng});
-			}
- 		}
-
-		params.waypoints = wp;
- 		directionsService.route(params, (result, status) => {
- 			if (status === google.maps.DirectionsStatus.OK) {
-				directionsRenderer.setDirections(result);
- 			} 
- 		});
- 	}
+	directions:any;
+	map: any;
+	public circle: any;
 
 	ionViewDidLoad() {
 		this.trajeto = this.navParams.data.trajeto;
@@ -121,34 +57,51 @@ export class DisplacementsPage {
 			.subscribe(res => {
 				if (res['_body']) {
 					this.trajetos = JSON.parse(res['_body']);
-					/*for(let item of this.trajetos){
-						let latLon = {
-							lat: item.lat,
-							lng: item.lon
-						}
-						this.locations.push(latLon);
-					}
-					this.initMap(this.locations);*/
-					this.initTraceRoute();
+					this.initMapLeaflet(this.trajetos);
 				}
 			}, (err) => {
 				console.log(err);
 			});
 	}
 
-	/*initMap(locations){
+	initMapLeaflet(locations){
+		this.map = leaflet.map('mapDisplacements').fitWorld();
+		leaflet.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		  attributions: 'www.tphangout.com'
+		}).addTo(this.map);
 
-		var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 10,
-          center: {lat: -23.551328, lng: -46.633347}
-        });
+		var waypoints = []
 
-        for(let item of locations){
-        	new google.maps.Marker({
-           		position: item,
-           		map: map
-         	 });
-        }
-	}*/
+		for(let item of locations){
+			var latLng = leaflet.latLng(item.lat, item.lon)
+			waypoints.push(latLng);
+		}
+
+		var firstItem = locations['0'];
+		var lastItem = _.last(locations);
+
+		var markerA = leaflet.marker(firstItem).addTo(this.map);
+		markerA.bindPopup('Inicio');
+	
+		var markerB = leaflet.marker(lastItem).addTo(this.map);
+		markerB.bindPopup('Fim');
+
+		this.map.setView(firstItem, 13);
+		
+		var latlngs = waypoints;
+		leaflet.polyline(latlngs, {color: 'black'}).addTo(this.map);
+		
+	}
+
+	addMarker(item){
+		var icon_car = leaflet.icon({
+			iconUrl: '../assets/imgs/icon-car.png',
+			iconSize: [30, 30]
+		});
+
+		if(this.circle)
+			this.map.removeLayer(this.circle);
+		this.circle = leaflet.marker([item.lat, item.lon], {icon: icon_car}).addTo(this.map);
+	}
 
 }

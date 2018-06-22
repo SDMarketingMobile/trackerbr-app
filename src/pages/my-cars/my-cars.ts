@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, ViewController, Platform } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
+import leaflet from 'leaflet';
 import * as _ from 'underscore';
 
 import { AlertController } from 'ionic-angular';
@@ -9,7 +10,6 @@ import { LoadingController } from 'ionic-angular';
 import { MapPage } from '../map/map';
 import { MyCarsDetailsPage } from '../my-cars-details/my-cars-details';
 
-declare var google;
 /**
  * Generated class for the MyCarsPage page.
  *
@@ -30,7 +30,8 @@ export class MyCarsPage {
 					public alertCtrl: AlertController,
 					public loadingCtrl: LoadingController,
 					public viewCtrl: ViewController,
-					public appCtrl: App
+					public appCtrl: App,
+					public plt: Platform
 				){
 	}
 
@@ -48,37 +49,14 @@ export class MyCarsPage {
 				lat: item.lat,
 				lng: item.lon
 			};
-
-			var geocoder = new google.maps.Geocoder;
-			geocoder.geocode({'location': latLon}, function(results, status) {
-				if (status === 'OK') {
-					if (results != null && typeof(results[0]) != 'undefined' && typeof(results[0].formatted_address) != 'undefined')
-						item.rua = results[0].formatted_address;
-					else
-						item.rua = "não trouxe essa merda";
-				}
-			});
 		}
-  		/*for(let index in this.veiculos){
+  		for(let index in this.veiculos){
   			this.veiculos[index].index = index;
-  			
-  			let latLon = {
-				lat: this.veiculos[index].lat,
-				lng: this.veiculos[index].lon
-			};
 
-			var geocoder = new google.maps.Geocoder;
-			geocoder.geocode({'location': latLon}, function(results, status) {
-				if (status === 'OK') {
-					if (results[1])
-						this.veiculos[index].rua;
-				}
-			});
-
-			for(let index in this.veiculos) {
+			/*for(let index in this.veiculos) {
 				this.initMap(index);
-			}
-		}*/
+			}*/
+		}
 	}
 
 	testecor(item){
@@ -96,16 +74,13 @@ export class MyCarsPage {
 			lat: this.veiculos[index].lat,
 			lng: this.veiculos[index].lon
 		};
-		
-		var map = new google.maps.Map(document.getElementById('map-car-'+index), {
-          zoom: 10,
-          center: latLon
-        });
 
-        new google.maps.Marker({
-       		position: latLon,
-       		map: map
-       	});
+		var map = leaflet.map('map-car-'+index).fitWorld();
+		leaflet.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		  attributions: 'www.tphangout.com'
+		}).addTo(map);
+
+		map.setView(latLon, 13);
 	}
 
 	showSelectMyCars(){

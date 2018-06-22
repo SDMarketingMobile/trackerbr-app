@@ -18,8 +18,14 @@ page-displacements {
 		background: #f5f6fb !important;
 	}
 
-	#map{
-		height: 100%;
+	#mapDisplacements{
+		height: 60%;
 		width: 100%;
 	}
+
+	ion-scroll {
+		height: 40%;
+		width: 100%;
+	}
+
 }

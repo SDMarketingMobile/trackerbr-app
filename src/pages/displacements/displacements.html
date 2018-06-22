@@ -12,7 +12,14 @@
 
 <ion-content >
 
-	<div #map id="map"></div>
+	<div #mapDisplacements id="mapDisplacements"></div>
 
+	<ion-scroll scrollY="true">
+		<ion-card *ngFor="let item of trajetos">
+			<ion-item (click)="addMarker(item)">
+				{{ item.lat }} / {{ item.lon }}
+			</ion-item>
+		</ion-card>
+	</ion-scroll>
 </ion-content>
  

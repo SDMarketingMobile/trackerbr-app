@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App, LoadingController } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
+import leaflet from 'leaflet'; 
+import 'leaflet-routing-machine';
 
 import { PathsPage } from '../paths/paths';
-
-declare var google;
 
 /**
  * Generated class for the MyCarsDetailsPage page.
@@ -28,27 +28,31 @@ export class MyCarsDetailsPage {
 		public loadingCtrl: LoadingController 
 	){}
 
+	map: any;
 	public veiculo = {};
 	public color = "";
 
 	ionViewDidLoad() {
 		this.veiculo = this.navParams.data.veiculo;
-		this.initMap(this.veiculo);
+		this.initMapLeaflet(this.veiculo);
 		this.testecor(this.veiculo);
 	}
 
-	initMap(veiculo){
+	initMapLeaflet(veiculo){
+		this.map = leaflet.map('map').fitWorld();
+		leaflet.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		  attributions: 'www.tphangout.com',
+		  maxZoom: 18
+		}).addTo(this.map);
 
-		var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 16,
-          center: veiculo
-        });
+		this.map.setView(veiculo, 15);
 
-        
-		return new google.maps.Marker({
-			position: veiculo,
-			map: map
- 		});
+		var icon_car = leaflet.icon({
+			iconUrl: '../assets/imgs/icon-car.png',
+			iconSize:     [30, 30]
+		});
+
+		var marker = leaflet.marker(veiculo, {icon: icon_car}).addTo(this.map);
 	}
 
 	testecor(veiculo){

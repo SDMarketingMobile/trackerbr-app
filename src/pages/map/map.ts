@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, App, LoadingController } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
+import leaflet from 'leaflet'; 
 
-declare var google;
+//declare var google;
 
 /**
 * Generated class for the MapPage page.
@@ -16,7 +17,7 @@ declare var google;
 	templateUrl: 'map.html',
 })
 export class MapPage {
-
+	map: any;
 	constructor(	public navCtrl: NavController, 
 					public navParams: NavParams, 
 					public http: Http,
@@ -28,6 +29,7 @@ export class MapPage {
 
 	ionViewDidLoad() {
 		this.load();
+		
 	}
 
 	public veiculos: any;
@@ -50,12 +52,14 @@ export class MapPage {
 					this.locations.push(latLon);
 				}
 			}
-			this.initMap(this.locations);
+			
+			this.initMapLeaflet(this.locations);
 
 		} else if (this.navParams.data.veiculo){
 			this.veiculo = this.navParams.data.veiculo;
 			this.locations.push(this.veiculo);
-			this.initMap(this.locations);
+			
+			this.initMapLeaflet(this.locations);
 
 		} else {
 			var token = JSON.parse(localStorage.getItem('app.trackerbr.user.data'));
@@ -72,12 +76,13 @@ export class MapPage {
 							if (item.velocidade > 0) {
 								let latLon = {
 									lat: item.lat,
-									lng: item.lon
+									lng: item.lon,
+									placa: item.placa
 								}
 								this.locations.push(latLon);
 							}
 						}
-						this.initMap(this.locations);
+						this.initMapLeaflet(this.locations);
 					}
 				}, (err) => {
 					console.log(err);
@@ -87,19 +92,24 @@ export class MapPage {
 
 	}
 
-	initMap(locations){
+	initMapLeaflet(locations){
+		this.map = leaflet.map('map').fitWorld();
+		leaflet.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		  attributions: 'www.tphangout.com',
+		  maxZoom: 18
+		}).addTo(this.map);
 
-		var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 10,
-          center: {lat: -23.551328, lng: -46.633347}
-        });
+		this.map.setView([-23.551328, -46.633347], 12);
 
-        for(let item of locations){
-        	new google.maps.Marker({
-           		position: item,
-           		map: map
-         	 });
-        }
+		var icon_car = leaflet.icon({
+			iconUrl: '../assets/imgs/icon-car.png',
+			iconSize:     [30, 30]
+		});
+
+		for(let item of locations){
+			var marker = leaflet.marker([item.lat, item.lng], {icon: icon_car}).addTo(this.map);
+			marker.bindPopup(item.placa);
+		}
 	}
 
 }

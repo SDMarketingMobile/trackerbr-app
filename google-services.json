@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "127879181865",
+    "firebase_url": "https://testepush-8775f.firebaseio.com",
+    "project_id": "testepush-8775f",
+    "storage_bucket": "testepush-8775f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:127879181865:android:911da6a3c6b5fe57",
+        "android_client_info": {
+          "package_name": "com.rafaelbispo.testepush"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "127879181865-8e68ber1s1bvnf2d38sr6n7a7frc7p1d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmAL9W91aimHj2gVgVSG33xuDhnpwhP4Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

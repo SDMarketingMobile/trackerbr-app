@@ -1,11 +1,6 @@
 <ion-header>
 	<ion-navbar color="toolbar-map" class="menu">
-		<img class="img" src="../assets/imgs/logo_trackerbr.png">
-		<ion-buttons end>
-			<button ion-button icon-only>
-				<ion-icon name="funnel"></ion-icon>
-			</button>
-		</ion-buttons>
+		<ion-title><strong>Deslocamentos</strong></ion-title>
 	</ion-navbar>
 </ion-header>
 
@@ -16,9 +11,11 @@
 
 	<ion-scroll scrollY="true">
 		<ion-card *ngFor="let item of trajetos">
-			<ion-item (click)="addMarker(item)">
-				{{ item.lat }} / {{ item.lon }}
-			</ion-item>
+			<ion-card-content (click)="addMarker(item)">
+				<ion-icon name="clock"></ion-icon><small> {{ item.data }}</small>
+				<br>
+				<ion-icon name="speedometer"></ion-icon><small> {{ item.velocidade }} km/h</small>
+			</ion-card-content>
 		</ion-card>
 	</ion-scroll>
 </ion-content>

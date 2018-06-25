@@ -22,12 +22,17 @@ export class ConfigPage {
   				public appCtrl: App) {
   }
 
+  public username: any;
+  public total_veiculos_cadastrados = 0;
+
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ConfigPage');
+    this.total_veiculos_cadastrados = this.navParams.data.total_veiculos_cadastrados;
+    this.username = localStorage.getItem('app.trackerbr.user.username');
   }
 
   logout(){
 		this.appCtrl.getRootNav().setRoot(LoginPage);
-		localStorage.setItem("app.trackerbr.user.data", '');
+    localStorage.removeItem('app.trackerbr.user.data');
+		localStorage.removeItem('app.trackerbr.user.username');
 	}
 }

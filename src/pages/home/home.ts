@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, App, LoadingController } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
 
+import { LoginPage } from '../login/login';
 import { MyCarsPage } from '../my-cars/my-cars';
 import { MapPage } from '../map/map';
 import { ConfigPage } from '../config/config';
@@ -48,7 +49,7 @@ export class HomePage {
 	}
 
 	goToConfigPage(){
-		this.navCtrl.push(ConfigPage);
+		this.navCtrl.push(ConfigPage, {'total_veiculos_cadastrados': this.veiculos.length});
 	}
 
 	goToNotificationPage(){
@@ -103,8 +104,11 @@ export class HomePage {
 					loader.dismiss();
 				}
 			}, (err) => {
-				console.log(err);
-				loader.dismiss();
+				if (err['status'] == 401) {
+					loader.dismiss();
+					this.appCtrl.getRootNav().setRoot(LoginPage);
+					localStorage.removeItem('app.trackerbr.user.data');
+				}
 			});
 	}
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App, LoadingController } from 'ionic-angular';
-import { Http, Headers } from '@angular/http';
+import { Http } from '@angular/http';
 import leaflet from 'leaflet'; 
 import 'leaflet-routing-machine';
 
@@ -45,14 +45,14 @@ export class MyCarsDetailsPage {
 		  maxZoom: 18
 		}).addTo(this.map);
 
-		this.map.setView(veiculo, 15);
+		this.map.setView(veiculo, 18);
 
 		var icon_car = leaflet.icon({
 			iconUrl: '../assets/imgs/icon-car.png',
-			iconSize:     [30, 30]
+			iconSize: [25, 20]
 		});
 
-		var marker = leaflet.marker(veiculo, {icon: icon_car}).addTo(this.map);
+		leaflet.marker(veiculo, {icon: icon_car}).addTo(this.map);
 	}
 
 	testecor(veiculo){

@@ -6,7 +6,7 @@
 -->
 <ion-header>
 	<ion-navbar color="toolbar-my-cars" class="menu">
-		<img class="img" src="../assets/imgs/logo_trackerbr.png">
+		<ion-title><strong>Meus Carros</strong></ion-title>
 		<ion-buttons end>
 			<button ion-button icon-only *ngIf="showSelect == false" (click)="showSelectMyCars()">
 				<ion-icon name="funnel"></ion-icon>
@@ -37,10 +37,11 @@
 			<ion-checkbox *ngIf="showSelect" [(ngModel)]="item.selected" end></ion-checkbox>
 		</ion-card-header>
 		<ion-card-content (click)="goToMyCarsDetailsPage(item)">
-			<ion-icon class="icon-xl" name="locate"></ion-icon><small> {{ item.rua }}</small>
+			<ion-icon class="icon-xl" name="locate"></ion-icon>
+				<small> {{ item.rua }}, {{ item.numero_endereco }}, {{ item.bairro }}, {{ item.cidade }} - {{ item.estado }}, {{ item.cep }}, {{ item.pais }}</small>
 			<br>
 			<ion-icon class="icon-xl" name="speedometer"></ion-icon><small> {{ item.velocidade }}km/h  </small>
-			<ion-icon class="icon-xl" name="walk"></ion-icon><small> 13.865 km</small>
+			<!--<ion-icon class="icon-xl" name="walk"></ion-icon><small> 13.865 km</small>-->
 			<br>
 			<ion-icon class="icon-xl" name="timer"></ion-icon><small> {{ item.dataServidor.date }}</small>
 			<div id="map-car-{{ item.index }}"></div>

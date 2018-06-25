@@ -4,6 +4,7 @@ import { Http, Headers } from '@angular/http';
 
 import { AlertController } from 'ionic-angular';
 
+import { LoginPage } from '../login/login';
 import { DisplacementsPage } from '../displacements/displacements';
 
 /**
@@ -82,7 +83,11 @@ export class PathsPage {
 					loader.dismiss();			
 				}
 			}, (err) => {
-				console.log(err);
+				if (err['status'] == 401) {
+					loader.dismiss();
+					this.appCtrl.getRootNav().setRoot(LoginPage);
+					localStorage.removeItem('app.trackerbr.user.data');
+				}
 			});
 
 		

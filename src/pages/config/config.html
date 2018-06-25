@@ -21,12 +21,13 @@
 		<ion-thumbnail item-start>
 			<ion-icon class="icon-xl" name="person"></ion-icon>
 		</ion-thumbnail>
-		<h2>Filipe Coelho</h2>
-		<p> Carros Castrados: <strong>2</strong></p>
-		<p> Ônibus Castrados: <strong>1</strong></p>
+		<h2>{{ username }}@trackerbr</h2>
+		<p>Total de veiculos cadastrados<br>
+			<strong>{{ total_veiculos_cadastrados }}</strong>
+		</p>
 		<ion-buttons>
-			<button ion-button icon-only (click)="logout()">
-				<ion-icon name="log-out"></ion-icon>
+			<button ion-button icon-only (click)="logout()">&nbsp;&nbsp;Sair
+				<ion-icon item-end name="log-out"></ion-icon>
 			</button>
 		</ion-buttons>
 	</div>

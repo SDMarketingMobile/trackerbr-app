@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, App, LoadingController } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
 import { Http, Headers } from '@angular/http';
 import leaflet from 'leaflet'; 
 
-//declare var google;
+import { LoginPage } from '../login/login';
 
 /**
 * Generated class for the MapPage page.
@@ -22,7 +23,8 @@ export class MapPage {
 					public navParams: NavParams, 
 					public http: Http,
 					public appCtrl: App,
-					public loadingCtrl: LoadingController ){
+					public loadingCtrl: LoadingController,
+					public geolocation: Geolocation ){
 					//private nativePageTransitions: NativePageTransitions){
 
 	}
@@ -47,7 +49,8 @@ export class MapPage {
 				if (item.selected) {
 					let latLon = {
 						lat: item.lat,
-						lng: item.lon
+						lng: item.lon,
+						placa: item.placa
 					}
 					this.locations.push(latLon);
 				}
@@ -85,8 +88,11 @@ export class MapPage {
 						this.initMapLeaflet(this.locations);
 					}
 				}, (err) => {
-					console.log(err);
-					loader.dismiss();
+					if (err['status'] == 401) {
+						loader.dismiss();
+						this.appCtrl.getRootNav().setRoot(LoginPage);
+						localStorage.removeItem('app.trackerbr.user.data');
+					}
 				});
 		}
 
@@ -99,17 +105,29 @@ export class MapPage {
 		  maxZoom: 18
 		}).addTo(this.map);
 
-		this.map.setView([-23.551328, -46.633347], 12);
+
+		this.geolocation.getCurrentPosition().then((resp) => {
+			alert(resp);
+		 // resp.coords.latitude
+		 // resp.coords.longitude
+		}).catch((error) => {
+			alert('Erro ao pegar localização, definindo São Paulo')
+			this.localfixa();
+		});
 
 		var icon_car = leaflet.icon({
 			iconUrl: '../assets/imgs/icon-car.png',
-			iconSize:     [30, 30]
+			iconSize: [25, 20]
 		});
 
 		for(let item of locations){
 			var marker = leaflet.marker([item.lat, item.lng], {icon: icon_car}).addTo(this.map);
 			marker.bindPopup(item.placa);
 		}
+	}
+
+	localfixa(){
+		this.map.setView([-23.551328, -46.633347], 10);
 	}
 
 }

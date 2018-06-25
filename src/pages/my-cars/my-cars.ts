@@ -7,6 +7,7 @@ import * as _ from 'underscore';
 import { AlertController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 
+import { LoginPage } from '../login/login';
 import { MapPage } from '../map/map';
 import { MyCarsDetailsPage } from '../my-cars-details/my-cars-details';
 
@@ -36,6 +37,7 @@ export class MyCarsPage {
 	}
 
 	public veiculos: any;
+	public ruas: any;
 	public tipos_veiculos = [];
 	public showSelect = false;
 	public selected = {};
@@ -43,13 +45,8 @@ export class MyCarsPage {
 	ionViewDidLoad() {
   		this.veiculos = this.navParams.data.veiculos;
   		this.tipos_veiculos = _.groupBy(this.veiculos, 'tipo');
-
-		for(let item of this.veiculos){
-			let latLon = {
-				lat: item.lat,
-				lng: item.lon
-			};
-		}
+		this.getStreetName(this.veiculos);
+		
   		for(let index in this.veiculos){
   			this.veiculos[index].index = index;
 
@@ -114,16 +111,37 @@ export class MyCarsPage {
 				if (res['_body']) {
 					this.veiculos = JSON.parse(res['_body']).veiculos;
 					refresher.complete();
+					this.getStreetName(this.veiculos);
 				}
-				/*for(let item of this.veiculos){
-					let latLon = {
-						lat: item.lat,
-						lng: item.lon
-					}
-					this.initMap(latLon);
-				}*/
 			}, (err) => {
-				console.log(err);
+				if (err['status'] == 401) {
+					this.appCtrl.getRootNav().setRoot(LoginPage);
+					localStorage.removeItem('app.trackerbr.user.data');
+				}
 			});
+	}
+
+	getStreetName(veiculos){
+		var error = false;
+		for(let item of veiculos){
+			this.http.get('https://nominatim.openstreetmap.org/reverse?format=json&lat='+ item.lat +'&lon='+ item.lon +'&zoom=18&addressdetails=1')
+			.subscribe(res => {
+				if (res['_body']) {
+					var endereco = JSON.parse(res['_body']);
+					item.rua = endereco['address']['road'];
+					item.numero_endereco = endereco['address']['house_number'];
+					item.bairro = endereco['address']['city_district'];
+					item.cidade = endereco['address']['city'];
+					item.estado = endereco['address']['state'];
+					item.cep = endereco['address']['postcode'];
+					item.pais = endereco['address']['country'];
+				}
+			}, (err) => {
+				if (error === false) {
+					alert('Erro ao carregar ruas!');
+				}
+				error = true;
+			});
+		}
 	}
 }

@@ -4,6 +4,7 @@ import { Http, Headers } from '@angular/http';
 import leaflet from 'leaflet';
 import * as _ from 'underscore';
 
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the DisplacementsPage page.
@@ -28,6 +29,8 @@ export class DisplacementsPage {
 
  	public trajeto: any;
  	public trajetos: any;
+ 	public ruas: any;
+	public circle: any;
  	public locations = [];
  	public busca = {
  		id_veiculo: null,
@@ -36,7 +39,6 @@ export class DisplacementsPage {
  	};
 	directions:any;
 	map: any;
-	public circle: any;
 
 	ionViewDidLoad() {
 		this.trajeto = this.navParams.data.trajeto;
@@ -44,6 +46,12 @@ export class DisplacementsPage {
 	}
 
 	loadTrajetos(){
+		let loader = this.loadingCtrl.create({
+			content: "Aguarde!"
+		});
+
+		loader.present();
+
 		this.busca['id_veiculo'] = this.trajeto.id_veiculo;
 		this.busca['dta_inicial'] = this.trajeto.data_ini;
 		this.busca['dta_final'] = this.trajeto.data_fim;
@@ -58,9 +66,14 @@ export class DisplacementsPage {
 				if (res['_body']) {
 					this.trajetos = JSON.parse(res['_body']);
 					this.initMapLeaflet(this.trajetos);
+					loader.dismiss();
 				}
 			}, (err) => {
-				console.log(err);
+				if (err['status'] == 401) {
+					loader.dismiss();
+					this.appCtrl.getRootNav().setRoot(LoginPage);
+					localStorage.removeItem('app.trackerbr.user.data');
+				}
 			});
 	}
 
@@ -96,12 +109,16 @@ export class DisplacementsPage {
 	addMarker(item){
 		var icon_car = leaflet.icon({
 			iconUrl: '../assets/imgs/icon-car.png',
-			iconSize: [30, 30]
+			iconSize: [25, 20]
 		});
 
 		if(this.circle)
 			this.map.removeLayer(this.circle);
+
 		this.circle = leaflet.marker([item.lat, item.lon], {icon: icon_car}).addTo(this.map);
+
+		this.map.setView([item.lat, item.lon], 15);
+
 	}
 
 }

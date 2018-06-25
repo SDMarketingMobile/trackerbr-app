@@ -33,7 +33,12 @@ export class LoginPage {
 	}
 
 	ionViewDidLoad() {
-		console.log('ionViewDidLoad LoginPage');
+		if (localStorage.getItem('app.trackerbr.user.data')) {
+			var token = JSON.parse(localStorage.getItem('app.trackerbr.user.data'));
+			if (token) {
+				this.appCtrl.getRootNav().setRoot(HomePage);
+			}
+		}
 	}
 
 	goToHomePage(){
@@ -89,6 +94,7 @@ export class LoginPage {
 				if (res.status == 200){
 					this.goToHomePage();
 					localStorage.setItem("app.trackerbr.user.data", res['_body']);
+					localStorage.setItem("app.trackerbr.user.username", this.data.username);
 				}
 
 				loader.dismiss();

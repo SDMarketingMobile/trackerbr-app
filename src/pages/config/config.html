@@ -6,29 +6,47 @@
 -->
 <ion-header>
 	<ion-navbar color="toolbar-config" class="menu">
-		<img class="img" src="../assets/imgs/logo_trackerbr.png">
+		<ion-title><strong>Configurações</strong></ion-title>
 		<ion-buttons end>
-			<button ion-button icon-only>
-				<ion-icon name="refresh"></ion-icon>
+			<button ion-button icon-only (click)="logout()">
+				<ion-icon item-end name="log-out"></ion-icon>
 			</button>
 		</ion-buttons>
 	</ion-navbar>
 </ion-header>
 
 
-<ion-content center>
-	<div class="shadow-top text-center">
-		<ion-thumbnail item-start>
-			<ion-icon class="icon-xl" name="person"></ion-icon>
-		</ion-thumbnail>
-		<h2>{{ username }}@trackerbr</h2>
-		<p>Total de veiculos cadastrados<br>
-			<strong>{{ total_veiculos_cadastrados }}</strong>
-		</p>
-		<ion-buttons>
-			<button ion-button icon-only (click)="logout()">&nbsp;&nbsp;Sair
-				<ion-icon item-end name="log-out"></ion-icon>
+<ion-content class="card-background-page">
+	<ion-card>
+		<img src="assets/imgs/map.jpg"/>
+		<div class="card-title">{{ username }}@trackerbr</div>
+	</ion-card>
+
+	<div class="list">
+		<ion-list>
+			<ion-list-header>
+				<strong>Meus Dados</strong>
+			</ion-list-header>
+			<button ion-item>
+				<div item-start>
+					{{ total_veiculos_cadastrados }}
+				</div>
+				<strong>Veiculos Cadastrados</strong>
 			</button>
-		</ion-buttons>
+			<button ion-item (click)="goToMyCars('lig')">
+				<div item-start>
+					{{ total_veiculos_movimento }}
+				</div>
+				<strong>Veiculos Ligados/Em movimento</strong>
+			</button>
+			<button ion-item (click)="goToMyCars('des')">
+				<div item-start>
+					{{ total_veiculos_desligados }}
+				</div>
+				<strong>Veiculos Desligados</strong>
+			</button>
+		</ion-list>
 	</div>
+
+	<button ion-button full color="danger" (click)="logout()">Sair</button>
 </ion-content>

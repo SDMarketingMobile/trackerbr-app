@@ -45,10 +45,15 @@ export class LoginPage {
 		this.appCtrl.getRootNav().setRoot(HomePage);
 	}
 
+	public continuarLogado = false;
 	data = {
 		username: "",
 		password: ""
 	};
+
+	manterLogado(){
+		this.continuarLogado = !this.continuarLogado;
+	}
 
 	doLogin(){
 		let loader = this.loadingCtrl.create({
@@ -95,8 +100,11 @@ export class LoginPage {
 					this.goToHomePage();
 					localStorage.setItem("app.trackerbr.user.data", res['_body']);
 					localStorage.setItem("app.trackerbr.user.username", this.data.username);
+					if (this.continuarLogado == true) {
+						localStorage.setItem("app.trackerbr.user.password", this.data.password);
+						localStorage.setItem("app.trackerbr.user.doLogin", 'true');
+					}
 				}
-
 				loader.dismiss();
 			}, (err) => {
 				if (err.status == 400 || err.status == 401){
@@ -105,10 +113,8 @@ export class LoginPage {
 						subTitle: 'Usuário e/ou Senha inválido(s)!',
 						buttons: ['OK']
 					});
-
 					alert.present();
 				}
-
 				loader.dismiss();
 			});
 	}

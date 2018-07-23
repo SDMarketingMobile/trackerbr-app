@@ -14,7 +14,6 @@ page-config {
 
 	ion-content {
 		color: #fff !important;
-		text-align: center;
 	}
 
 	ion-thumbnail {
@@ -33,5 +32,43 @@ page-config {
 			   -moz-box-shadow: inset 0px 14px 17px -5px rgba(0,0,0,0.53);
 			        box-shadow: inset 0px 14px 17px -5px rgba(0,0,0,0.53);
 		}
+
+	.card-background-page {
+
+		ion-card {
+			position: relative;
+			text-align: center;
+			height: 200px;
+			img{
+				opacity: 0.4;
+			}
+		}
+
+		.card-title {
+			position: absolute;
+			top: 36%;
+			font-size: 2.0em;
+			width: 100%;
+			font-weight: bold;
+			color: #000;
+		}
+
+		.card-subtitle {
+			font-size: 1.0em;
+			position: absolute;
+			top: 52%;
+			width: 100%;
+			color: #000;
+		}
+
+	}
+
+	.pull-right{
+		float: right;
+	}
+
+	.list{
+		background-color: #fff;
+	}
 
 }

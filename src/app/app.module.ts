@@ -7,6 +7,7 @@ import { Push } from '@ionic-native/push';
 import { Geolocation } from '@ionic-native/geolocation';
 import { HttpModule } from '@angular/http';
 
+//Pages
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
@@ -18,8 +19,9 @@ import { NotificationPage } from '../pages/notification/notification';
 import { PathsPage } from '../pages/paths/paths';
 import { DisplacementsPage } from '../pages/displacements/displacements';
 import { AboutPage } from '../pages/about/about';
-import { UsersProvider } from '../providers/users/users';
-import { ProdutosProvider } from '../providers/produtos/produtos';
+
+//Providers
+import { LoginProvider } from '../providers/login/login';
 
 @NgModule({
   declarations: [
@@ -60,8 +62,7 @@ import { ProdutosProvider } from '../providers/produtos/produtos';
     Push,
     Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UsersProvider,
-    ProdutosProvider
+    LoginProvider
   ]
 })
 export class AppModule {}

@@ -6,12 +6,7 @@ import leaflet from 'leaflet';
 
 import { LoginPage } from '../login/login';
 
-/**
-* Generated class for the MapPage page.
-*
-* See https://ionicframework.com/docs/components/#navigation for more info on
-* Ionic pages and navigation.
-*/
+import { LoginProvider } from '../../providers/login/login';
 
 @Component({
 	selector: 'page-map',
@@ -24,7 +19,8 @@ export class MapPage {
 					public http: Http,
 					public appCtrl: App,
 					public loadingCtrl: LoadingController,
-					public geolocation: Geolocation ){
+					public geolocation: Geolocation,
+					public login: LoginProvider ){
 					//private nativePageTransitions: NativePageTransitions){
 
 	}
@@ -90,8 +86,12 @@ export class MapPage {
 				}, (err) => {
 					if (err['status'] == 401) {
 						loader.dismiss();
-						this.appCtrl.getRootNav().setRoot(LoginPage);
-						localStorage.removeItem('app.trackerbr.user.data');
+						if (localStorage.getItem('app.trackerbr.user.doLogin') == 'true') {
+							this.login.doLogin(this.load(), this.error());
+						} else{
+							this.appCtrl.getRootNav().setRoot(LoginPage);
+							this.resetLocalStorage();
+						}
 					}
 				});
 		}
@@ -106,17 +106,16 @@ export class MapPage {
 		}).addTo(this.map);
 
 
-		this.geolocation.getCurrentPosition().then((resp) => {
-			alert(resp);
-		 // resp.coords.latitude
-		 // resp.coords.longitude
-		}).catch((error) => {
-			alert('Erro ao pegar localização, definindo São Paulo')
-			this.localfixa();
-		});
+		this.geolocation.getCurrentPosition()
+			.then((resp) => {
+				this.map.setView([resp.coords.latitude, resp.coords.longitude], 10);
+			}).catch((error) => {
+				//alert('Erro ao pegar sua localização, definindo São Paulo');
+				this.defaultLocale();
+			});
 
 		var icon_car = leaflet.icon({
-			iconUrl: '../assets/imgs/icon-car.png',
+			iconUrl: 'assets/imgs/icon-car.png',
 			iconSize: [25, 20]
 		});
 
@@ -126,8 +125,20 @@ export class MapPage {
 		}
 	}
 
-	localfixa(){
+	defaultLocale(){
 		this.map.setView([-23.551328, -46.633347], 10);
+	}
+
+	error(){
+		this.appCtrl.getRootNav().setRoot(LoginPage);
+		this.resetLocalStorage();
+	}
+
+	resetLocalStorage(){
+		localStorage.removeItem('app.trackerbr.user.data');
+		localStorage.removeItem('app.trackerbr.user.username');
+		localStorage.removeItem('app.trackerbr.user.password');
+		localStorage.removeItem('app.trackerbr.user.doLogin');
 	}
 
 }

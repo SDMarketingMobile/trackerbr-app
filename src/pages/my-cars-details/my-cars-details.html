@@ -8,7 +8,7 @@
 	<ion-navbar color="{{ color }}" class="menu">
 		<ion-title><strong>{{ veiculo.placa }}</strong></ion-title>
 		<ion-buttons end>
-			<button ion-button icon-only>
+			<button ion-button icon-only (click)="load(veiculo.id_veiculo)">
 				<ion-icon name="refresh"></ion-icon>
 			</button>
 		</ion-buttons>
@@ -18,11 +18,30 @@
 
 <ion-content >
 
-	<div #map id="map"></div>
+	<div map id="map"></div>
 
 </ion-content>
 
 <ion-footer>
+
+	<ion-toolbar>
+		<ion-grid>
+			<ion-row>
+				<ion-col col-12>
+					<strong>Última Localização:</strong>
+					<br>
+					{{ veiculo.rua }}, {{ veiculo.numero_endereco }}<br>{{ veiculo.bairro }}, {{ veiculo.cidade }}
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col col-12>
+					<strong>Velocidade:</strong>
+					<br>
+					{{ veiculo.velocidade }} Km/h
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</ion-toolbar>
 
 	<ion-toolbar color="toolbar-home">
 		<ion-grid>

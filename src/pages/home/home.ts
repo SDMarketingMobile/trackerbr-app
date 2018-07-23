@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, App, LoadingController } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
+import moment from 'moment';
 
 import { LoginPage } from '../login/login';
 import { MyCarsPage } from '../my-cars/my-cars';
 import { MapPage } from '../map/map';
 import { ConfigPage } from '../config/config';
 import { NotificationPage } from '../notification/notification';
+
+import { LoginProvider } from '../../providers/login/login';
 
 @Component({
 	selector: 'page-home',
@@ -17,7 +20,8 @@ export class HomePage {
 					public navParams: NavParams, 
 					public http: Http,
 					public appCtrl: App,
-					public loadingCtrl: LoadingController ){
+					public loadingCtrl: LoadingController,
+					public login: LoginProvider ){
 					//private nativePageTransitions: NativePageTransitions){
 
 	}
@@ -49,7 +53,12 @@ export class HomePage {
 	}
 
 	goToConfigPage(){
-		this.navCtrl.push(ConfigPage, {'total_veiculos_cadastrados': this.veiculos.length});
+		this.navCtrl.push(ConfigPage, {	
+			'total_veiculos_cadastrados': this.veiculos.length, 
+			'total_veiculos_movimento': this.total_movimento, 
+			'total_veiculos_desligados': this.total_desligados,
+			'veiculos': this.veiculos
+		});
 	}
 
 	goToNotificationPage(){
@@ -89,6 +98,8 @@ export class HomePage {
 					this.veiculos = JSON.parse(res['_body']).veiculos
 					this.total_veiculos = this.veiculos.length;
 					for(let item of this.veiculos){
+						item.date = moment(item.dataServidor.date).format("DD/MM/YYYY");
+						item.hour = moment(item.dataServidor.date).format("HH:mm:ss");
 						if (item.velocidade > 0) {
 							this.total_movimento ++;
 						}
@@ -106,9 +117,25 @@ export class HomePage {
 			}, (err) => {
 				if (err['status'] == 401) {
 					loader.dismiss();
-					this.appCtrl.getRootNav().setRoot(LoginPage);
-					localStorage.removeItem('app.trackerbr.user.data');
+					if (localStorage.getItem('app.trackerbr.user.doLogin') == 'true') {
+						this.login.doLogin(this.load(), this.error());
+					} else{
+						this.appCtrl.getRootNav().setRoot(LoginPage);
+						this.resetLocalStorage();
+					}
 				}
 			});
+	}
+
+	error(){
+		this.appCtrl.getRootNav().setRoot(LoginPage);
+		this.resetLocalStorage();
+	}
+
+	resetLocalStorage(){
+		localStorage.removeItem('app.trackerbr.user.data');
+		localStorage.removeItem('app.trackerbr.user.username');
+		localStorage.removeItem('app.trackerbr.user.password');
+		localStorage.removeItem('app.trackerbr.user.doLogin');
 	}
 }

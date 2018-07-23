@@ -26,9 +26,9 @@
 
 	<ion-card class="card" *ngFor="let item of delocamentos">
 		<ion-card-content (click)="goToDisplacementsPage(item)">
-			<ion-icon name="clock"></ion-icon><small> Hora Inicial: {{ item.data_ini }}</small>
+			<ion-icon name="clock"></ion-icon><small> Hora Inicial: {{ item.data_ini_m }}</small>
 			<br>
-			<ion-icon name="clock"></ion-icon><small> Hora Final: {{ item.data_fim }}</small>
+			<ion-icon name="clock"></ion-icon><small> Hora Final: {{ item.data_fim_m }}</small>
 			<br>
 			<ion-icon name="resize"></ion-icon><small> Distância Percorrida: {{ item.distancia_percorrida }} km</small>
 		</ion-card-content>

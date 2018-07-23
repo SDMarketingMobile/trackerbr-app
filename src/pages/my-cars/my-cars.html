@@ -1,9 +1,3 @@
-<!--
-  Generated template for the MyCarsPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 	<ion-navbar color="toolbar-my-cars" class="menu">
 		<ion-title><strong>Meus Carros</strong></ion-title>
@@ -16,8 +10,17 @@
 			</button>
 		</ion-buttons>
 	</ion-navbar>
+	<ion-toolbar no-border-top color="toolbar-my-cars">
+		<ion-segment color="colorwhite" [(ngModel)]="status_selected">
+			<ion-segment-button value="1" (click)="getActiveVehicleList(1)">
+				Ligados
+			</ion-segment-button>
+			<ion-segment-button value="0" (click)="getActiveVehicleList(0)">
+				Desligados
+			</ion-segment-button>
+		</ion-segment>
+	</ion-toolbar>
 </ion-header>
-
 
 <ion-content>
 
@@ -25,32 +28,116 @@
 		<ion-refresher-content></ion-refresher-content>
 	</ion-refresher>
 
-	<ion-list class="type" no-lines>
-		<ion-item class="item-type">
-			<h2>CARROS</h2>
-		</ion-item>
-	</ion-list>
+	<div [ngSwitch]="status_selected">
+		<div *ngSwitchCase="'1'">
+			<ion-card class="card" *ngFor="let item of active_veiculos">
+				<ion-card-header [style.background-color]="colorCard(item)">
+					<ion-item [style.background-color]="colorCard(item)" class="card-title">
+						<span class="placa"><strong>{{ item.placa }}</strong></span>
+						<ion-checkbox *ngIf="showSelect" [(ngModel)]="item.selected" end></ion-checkbox>
+						<ion-avatar item-end>
+							<ion-icon class="icon-xl" name="car"></ion-icon>
+						</ion-avatar>
+					</ion-item>
+				</ion-card-header>
+				<ion-card-content (click)="goToMyCarsDetailsPage(item)" class="card-content">
+					<ion-grid>
+						<ion-row>
+							<ion-col col-7>
+								<ion-item>
+									<ion-avatar item-start class="avatar">
+										<ion-icon class="icon-xl" name="locate"></ion-icon>
+									</ion-avatar>
+									<p>{{ item.rua }}, {{ item.numero_endereco }}<br>{{ item.bairro }}, {{ item.cidade }}</p>
+								</ion-item>
+							</ion-col>
+							<ion-col col-5>
+								<ion-item>
+									<ion-avatar item-start class="avatar">
+										<ion-icon class="icon-xl" name="speedometer"></ion-icon>
+									</ion-avatar>
+									<p>{{ item.velocidade }} Km/h</p>
+								</ion-item>
+							</ion-col>
+						</ion-row>
+						<ion-row>
+							<ion-col col-7>
+								<ion-item>
+									<ion-avatar item-start class="avatar">
+										<ion-icon class="icon-xl" name="timer"></ion-icon>
+									</ion-avatar>
+									<p>{{ item.date }}<br>{{ item.hour }}</p>
+								</ion-item>
+							</ion-col>
+							<ion-col col-5>
+								<ion-item>
+									<ion-avatar item-start class="avatar">
+										<ion-icon class="icon-xl" name="walk"></ion-icon>
+									</ion-avatar>
+									<p>{{ item.hodometro }} Km/h</p>
+								</ion-item>
+							</ion-col>
+						</ion-row>
+					</ion-grid>
 
-	<ion-card class="card" *ngFor="let item of veiculos">
-		<ion-card-header [style.background-color]="testecor(item)" class="card-title">
-			<span class="placa"><strong>{{ item.placa }}</strong></span>
-			<ion-checkbox *ngIf="showSelect" [(ngModel)]="item.selected" end></ion-checkbox>
-		</ion-card-header>
-		<ion-card-content (click)="goToMyCarsDetailsPage(item)">
-			<ion-icon class="icon-xl" name="locate"></ion-icon>
-				<small> {{ item.rua }}, {{ item.numero_endereco }}, {{ item.bairro }}, {{ item.cidade }} - {{ item.estado }}, {{ item.cep }}, {{ item.pais }}</small>
-			<br>
-			<ion-icon class="icon-xl" name="speedometer"></ion-icon><small> {{ item.velocidade }}km/h  </small>
-			<!--<ion-icon class="icon-xl" name="walk"></ion-icon><small> 13.865 km</small>-->
-			<br>
-			<ion-icon class="icon-xl" name="timer"></ion-icon><small> {{ item.dataServidor.date }}</small>
-			<div id="map-car-{{ item.index }}"></div>
-		</ion-card-content>
-	</ion-card>
+					<!--<div #mapCar{{item.index}} id="mapCar{{ item.index }}" class="mapCar"></div>-->
+				</ion-card-content>
+			</ion-card>
+		</div>
+		<div *ngSwitchCase="'0'">
+			<ion-card class="card" *ngFor="let item of active_veiculos">
+				<ion-card-header [style.background-color]="colorCard(item)">
+					<ion-item [style.background-color]="colorCard(item)" class="card-title">
+						<span class="placa"><strong>{{ item.placa }}</strong></span>
+						<ion-checkbox *ngIf="showSelect" [(ngModel)]="item.selected" end></ion-checkbox>
+						<ion-avatar item-end>
+							<ion-icon class="icon-xl" name="car"></ion-icon>
+						</ion-avatar>
+					</ion-item>
+				</ion-card-header>
+				<ion-card-content (click)="goToMyCarsDetailsPage(item)" class="card-content">
+					<ion-grid>
+						<ion-row>
+							<ion-col col-7>
+								<ion-item>
+									<ion-avatar item-start class="avatar">
+										<ion-icon class="icon-xl" name="locate"></ion-icon>
+									</ion-avatar>
+									<p>{{ item.rua }}, {{ item.numero_endereco }}<br>{{ item.bairro }}, {{ item.cidade }}</p>
+								</ion-item>
+							</ion-col>
+							<ion-col col-5>
+								<ion-item>
+									<ion-avatar item-start class="avatar">
+										<ion-icon class="icon-xl" name="speedometer"></ion-icon>
+									</ion-avatar>
+									<p>{{ item.velocidade }} Km/h</p>
+								</ion-item>
+							</ion-col>
+						</ion-row>
+						<ion-row>
+							<ion-col col-7>
+								<ion-item>
+									<ion-avatar item-start class="avatar">
+										<ion-icon class="icon-xl" name="timer"></ion-icon>
+									</ion-avatar>
+									<p>{{ item.date }}<br>{{ item.hour }}</p>
+								</ion-item>
+							</ion-col>
+							<ion-col col-5>
+								<ion-item>
+									<ion-avatar item-start class="avatar">
+										<ion-icon class="icon-xl" name="walk"></ion-icon>
+									</ion-avatar>
+									<p>{{ item.hodometro }} Km/h</p>
+								</ion-item>
+							</ion-col>
+						</ion-row>
+					</ion-grid>
 
-	<!-- <ion-list class="type" no-lines>
-		<ion-item class="item-type">
-			<h2>ÔNIBUS</h2>
-		</ion-item>
-	</ion-list>-->
+					<!--<div #mapCar{{item.index}} id="mapCar{{ item.index }}" class="mapCar"></div>-->
+				</ion-card-content>
+			</ion-card>
+		</div>
+	</div>
 </ion-content>

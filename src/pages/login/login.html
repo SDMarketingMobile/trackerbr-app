@@ -8,13 +8,13 @@
 <ion-content>
 	<ion-grid>
 
-		<img src="../assets/imgs/logo_trackerbr.png">
+		<img src="assets/imgs/logo_trackerbr.png">
 		<ion-row>
 			<ion-col offset-1 col-10>
 				<ion-list>
 
 					<ion-item>
-						<ion-input type="text" placeholder="Login" [(ngModel)]="data.username"></ion-input>
+						<ion-input type="text" placeholder="Login" [(ngModel)]="data.username" class="lowercase"></ion-input>
 						<span item-end class="teste">@trackerbr</span>
 					</ion-item>
 
@@ -25,6 +25,11 @@
 					<button ion-button color="light" clear round full>Esqueceu a senha?</button>
 
 					<button ion-button color="danger" round block (click)="doLogin()">Entrar</button>
+
+					<ion-item>
+						<ion-label>Manter-me logado</ion-label>
+						<ion-checkbox (click)="manterLogado()" item-end></ion-checkbox>
+					</ion-item>
 
 				</ion-list>
 			</ion-col>

@@ -3,15 +3,11 @@ import { IonicPage, NavController, NavParams, App, LoadingController } from 'ion
 import { Http, Headers } from '@angular/http';
 import leaflet from 'leaflet';
 import * as _ from 'underscore';
+import moment from 'moment';
 
 import { LoginPage } from '../login/login';
 
-/**
- * Generated class for the DisplacementsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { LoginProvider } from '../../providers/login/login';
 
 @IonicPage()
 @Component({
@@ -24,7 +20,8 @@ export class DisplacementsPage {
 				public navParams: NavParams, 
 				public http: Http,
 				public appCtrl: App,
-				public loadingCtrl: LoadingController
+				public loadingCtrl: LoadingController,
+				public login: LoginProvider
 			) {}
 
  	public trajeto: any;
@@ -65,14 +62,21 @@ export class DisplacementsPage {
 			.subscribe(res => {
 				if (res['_body']) {
 					this.trajetos = JSON.parse(res['_body']);
+					for(let item of this.trajetos){
+						item.data = moment(item.data).format("DD/MM/YYYY HH:mm:ss");
+					}
 					this.initMapLeaflet(this.trajetos);
 					loader.dismiss();
 				}
 			}, (err) => {
 				if (err['status'] == 401) {
 					loader.dismiss();
-					this.appCtrl.getRootNav().setRoot(LoginPage);
-					localStorage.removeItem('app.trackerbr.user.data');
+					if (localStorage.getItem('app.trackerbr.user.doLogin') == 'true') {
+						this.login.doLogin(this.loadTrajetos(), this.error());
+					} else{
+						this.appCtrl.getRootNav().setRoot(LoginPage);
+						this.resetLocalStorage();
+					}
 				}
 			});
 	}
@@ -108,7 +112,7 @@ export class DisplacementsPage {
 
 	addMarker(item){
 		var icon_car = leaflet.icon({
-			iconUrl: '../assets/imgs/icon-car.png',
+			iconUrl: 'assets/imgs/icon-car.png',
 			iconSize: [25, 20]
 		});
 
@@ -119,6 +123,18 @@ export class DisplacementsPage {
 
 		this.map.setView([item.lat, item.lon], 15);
 
+	}
+
+	error(){
+		this.appCtrl.getRootNav().setRoot(LoginPage);
+		this.resetLocalStorage();
+	}
+
+	resetLocalStorage(){
+		localStorage.removeItem('app.trackerbr.user.data');
+		localStorage.removeItem('app.trackerbr.user.username');
+		localStorage.removeItem('app.trackerbr.user.password');
+		localStorage.removeItem('app.trackerbr.user.doLogin');
 	}
 
 }

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, App, LoadingController } from 'ionic-angular';
+import { Push, PushObject, PushOptions } from '@ionic-native/push';
+import { BackgroundMode } from '@ionic-native/background-mode';
 import { Http, Headers } from '@angular/http';
 import moment from 'moment';
 
@@ -21,9 +23,27 @@ export class HomePage {
 					public http: Http,
 					public appCtrl: App,
 					public loadingCtrl: LoadingController,
-					public login: LoginProvider ){
-					//private nativePageTransitions: NativePageTransitions){
+					public login: LoginProvider,
+					private push: Push,
+					private backgroundMode: BackgroundMode ){
+		this.backgroundMode.disable();
+		this.backgroundMode.enable();
+	    this.backgroundMode.setDefaults({ silent: true });
+	    this.backgroundMode.excludeFromTaskList();
 
+		const options: PushOptions = {
+		   android: {
+		       sound: 'true'
+		   }
+		};
+
+		const pushObject: PushObject = this.push.init(options);
+
+		pushObject.on('registration').subscribe((registration: any) => {
+			localStorage.setItem("app.trackerbr.device.registrationId", registration.registrationId);
+		});
+
+		//pushObject.on('notification').subscribe((notification: any) => console.log('Received a notification', notification.title));
 	}
 
 	goToMyCarsPage(){

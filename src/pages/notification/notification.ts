@@ -1,13 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Push } from '@ionic-native/push';
-
-/**
- * Generated class for the NotificationPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Push, PushObject, PushOptions } from '@ionic-native/push';
 
 @IonicPage()
 @Component({
@@ -18,14 +11,17 @@ export class NotificationPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private push: Push) {
 
-	this.push.hasPermission().then((res: any) => {
-		if (res.isEnabled) {
-			alert('We have permission to send push notifications');
-		} else {
-			alert('We do not have permission to send push notifications');
-		}
-	});
+	const options: PushOptions = {
+	   android: {
+	       sound: 'true'
+	   }
+	};
 
+	const pushObject: PushObject = this.push.init(options);
+
+	pushObject.on('registration').subscribe((registration: any) => console.log(registration.registrationId));
+
+	pushObject.on('notification').subscribe((notification: any) => console.log('Received a notification', notification.title));
   }
 
   ionViewDidLoad() {

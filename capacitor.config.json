@@ -1,0 +1,6 @@
+{
+  "appId": "com.trackerbr.app",
+  "appName": "TrackerBRApp",
+  "bundledWebRuntime": false,
+  "webDir": "www"
+}

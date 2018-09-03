@@ -47,7 +47,7 @@
 		<ion-grid>
 			<ion-row>
 				<ion-col col-4>
-					<ion-thumbnail>
+					<ion-thumbnail (click)="activateIgnition(veiculo.id_veiculo, veiculo.lig)">
 						<ion-icon class="icon-xl" name="key"></ion-icon>
 						<br>
 						<small>Ignição</small>

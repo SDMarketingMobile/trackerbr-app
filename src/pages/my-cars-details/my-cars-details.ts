@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App, LoadingController } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
 import leaflet from 'leaflet'; 
+import * as _ from 'underscore';
 import 'leaflet-routing-machine';
 
 import { PathsPage } from '../paths/paths';
@@ -113,6 +114,7 @@ export class MyCarsDetailsPage {
 	}
 
 	goToPathsPage(id_veiculo){
+
 		this.navCtrl.push(PathsPage, {id_veiculo});
 	}
 
@@ -169,6 +171,34 @@ export class MyCarsDetailsPage {
 		localStorage.removeItem('app.trackerbr.user.username');
 		localStorage.removeItem('app.trackerbr.user.password');
 		localStorage.removeItem('app.trackerbr.user.doLogin');
+	}
+
+	public cars = [];
+	activateIgnition(id_veiculo, lig){
+		this.cars = JSON.parse(localStorage.getItem('app.trackerbr.verification-cars'));
+		if(this.cars == null)
+			this.cars = [];
+
+		if(this.cars.length > 0){
+			for(let item of this.cars){
+				if (item.id_veiculo == id_veiculo){
+					this.cars = _.without(this.cars, id_veiculo);
+				} else{
+					this.cars.push({
+						"id_veiculo":id_veiculo,
+						"lig": lig,
+						"enviada": 0
+					});
+				}
+			}
+		}else{
+			this.cars.push({
+				"id_veiculo":id_veiculo,
+				"lig": lig,
+				"enviada": 0
+			});
+		}
+		localStorage.setItem('app.trackerbr.verification-cars', JSON.stringify(this.cars));
 	}
 
 } 

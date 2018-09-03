@@ -42,6 +42,7 @@ export class LoginPage {
 	}
 
 	goToHomePage(){
+
 		this.appCtrl.getRootNav().setRoot(HomePage);
 	}
 
@@ -52,6 +53,7 @@ export class LoginPage {
 	};
 
 	manterLogado(){
+		
 		this.continuarLogado = !this.continuarLogado;
 	}
 
@@ -100,6 +102,7 @@ export class LoginPage {
 					this.goToHomePage();
 					localStorage.setItem("app.trackerbr.user.data", res['_body']);
 					localStorage.setItem("app.trackerbr.user.username", this.data.username);
+					//localStorage.setItem("app.trackerbr.user.verification-cars", []);
 					if (this.continuarLogado == true) {
 						localStorage.setItem("app.trackerbr.user.password", this.data.password);
 						localStorage.setItem("app.trackerbr.user.doLogin", 'true');
